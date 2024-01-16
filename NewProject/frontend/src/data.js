@@ -23,3 +23,9 @@ export const sample_foods = [
     tags: ["SlowFood", "Lunch"],
   },
 ];
+
+export const sample_tags = [
+  { name: "All", count: 6 },
+  { name: "FastFood", count: 4 },
+  { name: "Pizza", count: 2 },
+];
