@@ -1,6 +1,8 @@
 import React, { useEffect, useReducer } from "react";
 import Thumbnails from "../../Thumbnails/Thumbnails";
-import { getAll } from "../../services/foodService";
+import { getAll, search } from "../../services/foodService";
+import { useParams } from "react-router-dom";
+import Search from "../../components/Search/Search";
 
 const initialState = { foods: [] };
 
@@ -16,14 +18,26 @@ const reducer = (state, action) => {
 export default function HomePage() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { foods } = state;
+  const { searchTerm } = useParams();
 
   useEffect(() => {
-    // Assuming getAll returns a Promise resolving to an array of foods
-    getAll().then((food) => dispatch({ type: "FOODS_LOADED", payload: food }));
-  }, []);
+    const loadFoods = async () => {
+      try {
+        const loadedFoods = searchTerm
+          ? await search(searchTerm)
+          : await getAll();
+        dispatch({ type: "FOODS_LOADED", payload: loadedFoods });
+      } catch (error) {
+        console.error("Error loading foods:", error);
+      }
+    };
+
+    loadFoods();
+  }, [searchTerm]); // Include searchTerm as a dependency to trigger useEffect on change
 
   return (
     <>
+      <Search />
       <Thumbnails foods={foods} />
     </>
   );
