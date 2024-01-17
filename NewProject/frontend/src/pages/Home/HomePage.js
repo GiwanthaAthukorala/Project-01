@@ -1,6 +1,11 @@
 import React, { useEffect, useReducer } from "react";
 import Thumbnails from "../../Thumbnails/Thumbnails";
-import { getAll, getAllTags, search } from "../../services/foodService";
+import {
+  getAll,
+  getAllByTag,
+  getAllTags,
+  search,
+} from "../../services/foodService";
 import { useParams } from "react-router-dom";
 import Search from "../../components/Search/Search";
 import Tags from "../../components/Tags/Tags";
@@ -10,9 +15,21 @@ const initialState = { foods: [], tags: [] };
 const reducer = (state, action) => {
   switch (action.type) {
     case "FOODS_LOADED":
-      return { ...state, foods: action.payload };
+      if (Array.isArray(action.payload)) {
+        return { ...state, foods: action.payload };
+      } else {
+        console.error("Invalid foods data:", action.payload);
+        return state;
+      }
+
     case "TAGS_LOADED":
-      return { ...state, tags: action.payload };
+      if (Array.isArray(action.payload)) {
+        return { ...state, tags: action.payload };
+      } else {
+        console.error("Invalid tags data:", action.payload);
+        return state;
+      }
+
     default:
       return state;
   }
@@ -21,7 +38,7 @@ const reducer = (state, action) => {
 export default function HomePage() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { foods, tags } = state;
-  const { searchTerm } = useParams();
+  const { searchTerm, tag } = useParams();
 
   useEffect(() => {
     getAllTags().then((tags) =>
@@ -30,9 +47,14 @@ export default function HomePage() {
 
     const loadFoods = async () => {
       try {
-        const loadedFoods = searchTerm
+        const loadedFoods = tag
+          ? await getAllByTag(tag)
+          : searchTerm
           ? await search(searchTerm)
           : await getAll();
+
+        console.log("Loaded Foods:", loadedFoods);
+
         dispatch({ type: "FOODS_LOADED", payload: loadedFoods });
       } catch (error) {
         console.error("Error loading foods:", error);
@@ -40,7 +62,7 @@ export default function HomePage() {
     };
 
     loadFoods();
-  }, [searchTerm]);
+  }, [searchTerm, tag]);
 
   return (
     <>
