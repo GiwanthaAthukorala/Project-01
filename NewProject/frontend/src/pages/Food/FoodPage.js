@@ -49,7 +49,7 @@ export default function FoodPage() {
             </div>
             <div className={classes.cook_time}>
               <span>
-                Time To Cook About<strong>{food.cookTime}</strong> minutes
+                Time To Cook About<strong> {food.cookTime} </strong> minutes
               </span>
             </div>
             <div className={classes.price}>
