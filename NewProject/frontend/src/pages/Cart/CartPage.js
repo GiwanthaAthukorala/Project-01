@@ -19,12 +19,13 @@ export default function CartPage() {
               <li key={item.food.id}>
                 <div>
                   <img
+                    className={classes.imgcart}
                     src={`/foods/${item.food.imageUrl}`}
                     alt={item.food.name}
                   />
                 </div>
                 <div>
-                  <Link to={`/food/${item.food.id}`}>{item.food.name}</Link>
+                  <Link to={`/food/${item.food.id}`}> {item.food.name} </Link>
                 </div>
 
                 <div>
@@ -53,7 +54,7 @@ export default function CartPage() {
           </ul>
           <div className={classes.checkout}>
             <div>
-              <div className={classes.food_count}>{cart.totalCount}</div>
+              <div className={classes.food_count}> {cart.totalCount} </div>
               <div className={classes.total_price}>
                 <Price price={cart.totalPrice} />
               </div>
