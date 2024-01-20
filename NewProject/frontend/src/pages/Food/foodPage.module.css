@@ -82,7 +82,7 @@
     content : 'Price:';
     color: darkgray;
 }
-button{
+.butn{
     color: white;
     background-color: red;
     border: none;
@@ -92,7 +92,7 @@ button{
     outline: none;
 
 }
-button:hover{
+.butn:hover{
     opacity: 0.5;
     cursor: pointer;
 }
