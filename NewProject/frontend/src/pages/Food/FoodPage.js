@@ -55,7 +55,7 @@ export default function FoodPage() {
             <div className={classes.price}>
               <Price price={food.price} />
             </div>
-            <button>Add To Cart</button>
+            <button className={classes.butn}>Add To Cart</button>
           </div>
         </div>
       )}
