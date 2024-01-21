@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Price from "../../components/Price/Price";
 
 export default function CartPage() {
-  const { cart } = useCart();
+  const { cart, removeFromCart } = useCart();
 
   return (
     <>
@@ -46,6 +46,16 @@ export default function CartPage() {
                 <div>
                   <Price price={item.price} />
                 </div>
+
+                <div>
+                  <button
+                    className={classes.remove_button}
+                    onClick={() => removeFromCart(item.food.id)}
+                  >
+                    Remove
+                  </button>
+                </div>
+
                 <div>
                   <button className={classes.remove_button}>Remove</button>
                 </div>
