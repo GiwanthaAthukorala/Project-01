@@ -11,9 +11,10 @@ app.use(
   })
 );
 
+// Use the foodRouter for handling routes related to foods
 app.use("/api/foods", foodRouter);
 
 const PORT = 5000;
 app.listen(PORT, () => {
-  console.log("listening on port" + PORT);
+  console.log("Server is listening on port " + PORT);
 });
