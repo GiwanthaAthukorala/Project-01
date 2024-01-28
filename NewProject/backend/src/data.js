@@ -29,3 +29,23 @@ export const sample_tags = [
   { name: "FastFood", count: 4 },
   { name: "Pizza", count: 2 },
 ];
+
+// loginging
+export const sample_users = [
+  {
+    id: 1,
+    name: "john Doe",
+    email: "jonh@gmail.com",
+    password: "12345",
+    address: "Pindeniya",
+    isAdmin: false,
+  },
+  {
+    id: 2,
+    name: "Giwantha",
+    email: "Giwaa@gmail.com",
+    password: "Giwa@12345",
+    address: "Kegall",
+    isAdmin: true,
+  },
+];
