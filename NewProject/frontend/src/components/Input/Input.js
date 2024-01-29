@@ -1,5 +1,5 @@
 import React from "react";
-import inputContainer from "../InputContainer/InputContainer";
+import InputContainer from "../InputContainer/InputContainer";
 import classes from "./input.module.css";
 
 function Input(
@@ -23,7 +23,7 @@ function Input(
   };
 
   return (
-    <inputContainer label={label}>
+    <InputContainer label={label}>
       <input
         defaultValue={defaultValue}
         className={classes.Input}
@@ -35,7 +35,7 @@ function Input(
         onBlur={onBlur}
       />
       {error && <div className={classes.error}>{getErrorMessage}</div>}
-    </inputContainer>
+    </InputContainer>
   );
 }
 
