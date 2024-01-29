@@ -5,6 +5,7 @@ import { useAuth } from "../../hooks/useAuth";
 import classes from "./loginPage.module.css";
 import Title from "../../components/Title/Title";
 import Input from "../../components/Input/Input";
+import Button from "../../components/Button/Button";
 
 export default function LoginPage() {
   const {
@@ -50,6 +51,8 @@ export default function LoginPage() {
             })}
             error={errors.password}
           />
+
+          <Button type="submit" text="Login" />
         </form>
       </div>
     </div>
