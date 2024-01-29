@@ -26,7 +26,7 @@ function Input(
     <InputContainer label={label}>
       <input
         defaultValue={defaultValue}
-        className={classes.Input}
+        className={classes.input}
         type={type}
         placeholder={label}
         ref={ref}
@@ -34,7 +34,7 @@ function Input(
         onChange={onChange}
         onBlur={onBlur}
       />
-      {error && <div className={classes.error}>{getErrorMessage}</div>}
+      {error && <div className={classes.errors}>{getErrorMessage()}</div>}
     </InputContainer>
   );
 }
