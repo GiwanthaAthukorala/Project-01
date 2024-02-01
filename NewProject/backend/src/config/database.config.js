@@ -1,4 +1,4 @@
-import { connect, set } from "mongodb";
+import { connect, set } from "mongoose";
 
 set("strictQuery", true);
 
