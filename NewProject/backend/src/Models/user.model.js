@@ -19,4 +19,4 @@ export const UserSchema = new Schema(
   }
 );
 
-export const UesrModel = model("user", UserSchema);
+export const UserModel = model("user", UserSchema);
