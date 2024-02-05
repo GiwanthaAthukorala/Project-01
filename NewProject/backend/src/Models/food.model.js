@@ -1,4 +1,4 @@
-import { model, Schema } from "mongodb";
+import { model, Schema } from "mongoose";
 
 export const FoodSchema = new Schema(
   {
