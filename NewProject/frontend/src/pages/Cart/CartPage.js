@@ -23,7 +23,7 @@ export default function CartPage() {
                 <div>
                   <img
                     className={classes.imgcart}
-                    src={`/foods/${item.food.imageUrl}`}
+                    src={`${item.food.imageUrl}`}
                     alt={item.food.name}
                   />
                 </div>
