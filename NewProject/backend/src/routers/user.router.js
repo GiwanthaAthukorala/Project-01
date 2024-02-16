@@ -5,6 +5,7 @@ import { UserModel } from "../Models/user.model.js";
 import bcrypt from "bcryptjs";
 const router = Router();
 import { BAD_REQUEST } from "../constants/httpStatus.js";
+const PASSWORD_HASH_SALT_ROUNDS = 10;
 
 router.post(
   "/login",
@@ -12,12 +13,36 @@ router.post(
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email });
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-      res.send(generateTokenResponse(user));
+    res.status(BAD_REQUEST).send("Username or password is invalid.");
+  })
+);
+
+router.post(
+  "/register",
+  handler(async (req, res) => {
+    const { name, email, password, address } = req.body;
+
+    const user = await UserModel.findOne({ email });
+
+    if (user) {
+      res.status(BAD_REQUEST).send("User already exists,Please Login!!");
       return;
     }
 
-    res.status(BAD_REQUEST).send("Username or password is invalid.");
+    const hashedPassword = await bcrypt.hash(
+      password,
+      PASSWORD_HASH_SALT_ROUNDS
+    );
+
+    const newUser = {
+      name,
+      email: email.toLowerCase(),
+      password: hashedPassword,
+      address,
+    };
+
+    const result = await UserModel.create(newUser);
+    res.send(generateTokenResponse(result));
   })
 );
 
