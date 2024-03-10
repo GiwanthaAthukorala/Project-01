@@ -12,10 +12,10 @@ import { toast } from "react-toastify";
 
 export default function Map({ readonly, location, onChange }) {
   return (
-    <div className={classes.Container}>
+    <div className={classes.container}>
       <MapContainer
         className={classes.map}
-        center={[0.0]}
+        center={[0, 0]}
         zoom={1}
         dragging={!readonly}
         touchZoom={!readonly}
@@ -25,8 +25,37 @@ export default function Map({ readonly, location, onChange }) {
         keyboard={!readonly}
         attributionControl={false}
       >
-        <TileLayer url="http:{$}.tile.openstreetmap.org/{z}/{x}/{y}/png" />
+        <TileLayer url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       </MapContainer>
     </div>
   );
 }
+
+function FindButtonAndMarker({ readonly, location, onChange }) {
+  const [position, setPosition] = useState(location);
+  const map = useMapEvents({
+    click(e) {
+      !readonly && setPosition(e.latlng);
+    },
+    locationfound(e) {
+      setPosition(e.latlng);
+      map.flyTo(e.latlng, 13);
+    },
+    locationerror(e) {
+      toast.error(e.message);
+    },
+  });
+}
+return (
+  <>
+    {!readonly && (
+      <button
+        type="button"
+        className={classes.find_location}
+        onClick={() => map.locate()}
+      >
+        Find My Location
+      </button>
+    )}
+  </>
+);
