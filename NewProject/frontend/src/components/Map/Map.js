@@ -9,6 +9,7 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import { toast } from "react-toastify";
+import { Draggable } from "leaflet";
 
 export default function Map({ readonly, location, onChange }) {
   return (
@@ -26,6 +27,7 @@ export default function Map({ readonly, location, onChange }) {
         attributionControl={false}
       >
         <TileLayer url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <FindButtonAndMarker readonly={readonly} location={location} />
       </MapContainer>
     </div>
   );
@@ -33,6 +35,14 @@ export default function Map({ readonly, location, onChange }) {
 
 function FindButtonAndMarker({ readonly, location, onChange }) {
   const [position, setPosition] = useState(location);
+
+  useEffect(() => {
+    if (readonly) {
+      map.setView(position, 13);
+    }
+    if (position) onChange(position);
+  }, [position]);
+
   const map = useMapEvents({
     click(e) {
       !readonly && setPosition(e.latlng);
@@ -45,17 +55,30 @@ function FindButtonAndMarker({ readonly, location, onChange }) {
       toast.error(e.message);
     },
   });
+  return (
+    <>
+      {!readonly && (
+        <button
+          type="button"
+          className={classes.find_location}
+          onClick={() => map.locate()}
+        >
+          Find My Location
+        </button>
+      )}
+      {position && (
+        <Marker
+          eventHandlers={{
+            dragend: (e) => {
+              setPosition(e.target.getLatLng());
+            },
+          }}
+          position={position}
+          draggable={!readonly}
+        >
+          <Popup>Shipping Location</Popup>
+        </Marker>
+      )}
+    </>
+  );
 }
-return (
-  <>
-    {!readonly && (
-      <button
-        type="button"
-        className={classes.find_location}
-        onClick={() => map.locate()}
-      >
-        Find My Location
-      </button>
-    )}
-  </>
-);
