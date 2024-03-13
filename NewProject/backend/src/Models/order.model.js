@@ -12,7 +12,7 @@ export const LatLngSchema = new Schema(
   }
 );
 
-export const OrderStatus = new Schema(
+export const OrderItemSchema = new Schema(
   {
     food: { type: FoodModel.schema, required: true },
     price: { type: Number, required: true },
@@ -36,8 +36,8 @@ const orderSchema = new Schema(
     payementId: { type: String },
     totalPrice: { type: Number, required: true },
     items: { type: [OrderItemSchema], required: true },
-    status: { type: String.Types.Onjected, required: true },
-    user: { type: Schema.Types.onjectId, required: true },
+    status: { type: String, default: OrderStatus.NEW },
+    user: { type: Schema.Types.ObjectId, required: true },
   },
   {
     timestamps: true,
