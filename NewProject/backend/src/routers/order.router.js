@@ -23,5 +23,8 @@ router.post(
 
     const newOrder = new OrderModel({ ...order, user: req.user.id });
     await newOrder.save();
+    res.send(newOrder);
   })
 );
+
+export default router;
